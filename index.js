@@ -14,10 +14,8 @@ module.exports = function(source) {
 	var loaderCallback = this.async();
 	var query = this.query instanceof Object ? this.query : loaderUtils.parseQuery(this.query);
 
-	// Get the configurable source of the soy runtime utilities, or use default.
-	var runtimeUtils = require.resolve(query.utils || closureTemplates['soyutils.js']);
 	// Create a require statement to be injected into the templates for shimming.
-	runtimeUtils = 'require(\'exports?goog,soy,soydata,soyshim!' + runtimeUtils + '\')';
+    var runtimeUtils = 'require(\'exports?goog,soy,soydata,soyshim!' + query.utils + '\')';
 	runtimeUtils = runtimeUtils.replace(/\\/g, '\\\\');
 
 	this.addDependency(require.resolve(closureTemplates['soyutils.js']));
@@ -67,7 +65,6 @@ module.exports = function(source) {
 				'var goog = ' + runtimeUtils + '.goog;',
 				'var soy = ' + runtimeUtils + '.soy;',
 				'var soydata = ' + runtimeUtils + '.soydata;',
-				'var soyshim = ' + runtimeUtils + '.soyshim;',
 
 				// Shims for encapsulating the compiled template.
 				'var ' + namespace + ';',
@@ -81,6 +78,6 @@ module.exports = function(source) {
 		// Cleanup temp directory
 		}).finally(function(template) {
 			return rimrafAsync(tempDir).return(template);
-			
+
 		});
 };
