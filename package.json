@@ -30,11 +30,11 @@
   },
   "dependencies": {
     "bluebird": "^2.9.25",
-    "closure-templates": "^20141017.0.1",
+    "closure-templates": "^20151008.0.0",
     "exports-loader": "^0.6.2",
     "loader-utils": "^0.2.7",
     "rimraf": "^2.3.4",
-    "soynode": "^0.7.5",
+    "soynode": "^1.1.0",
     "webpack": "^1.9.5"
   }
 }
